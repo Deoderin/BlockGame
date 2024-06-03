@@ -9,7 +9,7 @@ public class BaseLevelConfig : ScriptableObject
     public Shape MainShape {get;private set;}
     
     [field:SerializeField]
-    public List<WallContainer> LevelWallContainer {get;private set;}
+    public Wall BaseWall {get;private set;}
 }
 
 [Serializable]

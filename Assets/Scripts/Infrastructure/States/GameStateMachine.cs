@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using Zenject;
 
 public class GameStateMachine
@@ -44,38 +43,5 @@ public class GameStateMachine
     private TState GetState<TState>() where TState : class, IExitableState
     {
         return _state[typeof(TState)] as TState;
-    }
-}
-
-public class PendingUIState : IState
-{
-    private GameStateMachine _stateMachine;
-    public PendingUIState(GameStateMachine gameStateMachine) => _stateMachine = gameStateMachine;
-
-    public void Exit()
-    {
-        _stateMachine.Enter<GameLoopState>();
-    }
-
-    public void Enter()
-    {
-        
-    }
-}
-
-public class GameLoopState : IState
-{
-    private GameStateMachine _stateMachine;
-
-    public GameLoopState(GameStateMachine gameStateMachine) => _stateMachine = gameStateMachine;
-
-    public void Exit()
-    {
-        
-    }
-
-    public void Enter()
-    {
-         
     }
 }

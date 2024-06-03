@@ -25,11 +25,11 @@ public class GameFactory : IGameFactory
         return _currentShape;
     }
 
-    public List<Wall> GetWalls(int levelNumber) => _levelConfig.LevelWallContainer[levelNumber].LevelWall.Select(Object.Instantiate).ToList();
+    public Wall GetWall() => Object.Instantiate(_levelConfig.BaseWall);
 }
 
 public interface IGameFactory : IService
 {
     Shape GetShape();    
-    List<Wall> GetWalls(int levelNumber);
+    Wall GetWall();
 }
