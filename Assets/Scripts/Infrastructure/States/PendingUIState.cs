@@ -34,9 +34,5 @@ public class PendingUIState : IState
     {
         _gameGUI = _gameGUI == null ? GameGUI.instance : _gameGUI;
         _gameGUI.OpenUI();
-
-        //_cameraFollow = _cameraFollow == null ? Camera.main.GetComponent<CameraFollow>() : _cameraFollow;
-        //_cameraFollow.OpenUI();
-        //_stateMachine.Enter<GameLoopState>();
     }
 }

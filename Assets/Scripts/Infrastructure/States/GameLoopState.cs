@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 public class GameLoopState : IState
 {
+    public static Action startLevel;
     private GameStateMachine _stateMachine;
     private IGameFactory _gameFactory;    
     private IUpdateableServices _updateableServices;
@@ -10,14 +12,14 @@ public class GameLoopState : IState
     public GameLoopState(GameStateMachine gameStateMachine)
     {
         _stateMachine = gameStateMachine;
+        Shape.levelCompleted += LevelCompleted;
     }
+
+    ~GameLoopState() => Shape.levelCompleted -= LevelCompleted;
 
     public void Exit()
     {
         _updateableServices.UnRegisterUpdatableSystem(_shapePusher);
-        
-        Debug.LogError("KEKA");
-        //_stateMachine.Enter<PendingUIState>();
     }
 
     public void Enter()
@@ -27,13 +29,21 @@ public class GameLoopState : IState
         
         Camera camera = Camera.main;
 
-        var cameraFollow = camera.GetComponent<CameraFollow>();
+        var cameraFollow = camera.GetComponent<CameraFollow>(); //ToDo deleted this and fix inject
         var shape = _gameFactory.GetShape();
         
+        shape.RebuildShape();
         _shapePusher = new ShapePusher();
         _shapePusher.SetShape();
         _updateableServices.RegisterUpdatableSystem(_shapePusher);
         
         cameraFollow.SetTargets(shape.transform); //ToDo deleted this and fix inject
+        
+        startLevel?.Invoke();
+    }
+
+    private void LevelCompleted()
+    {
+        _stateMachine.Enter<FinishLevelState>();
     }
 }

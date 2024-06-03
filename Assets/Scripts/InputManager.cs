@@ -23,14 +23,14 @@ public class InputManager :  MonoBehaviour, IDragHandler, IEndDragHandler
         if(Input.touchCount == 1)
         {
             _touch = Input.GetTouch(0);
-
-            if(_touch.phase == TouchPhase.Stationary)
+            switch(_touch.phase)
             {
-                pressInput?.Invoke();
-            }
-            else if(_touch.phase == TouchPhase.Stationary)
-            {
-                unPressInput?.Invoke();
+                case TouchPhase.Stationary:
+                    pressInput?.Invoke();
+                    break;
+                case TouchPhase.Ended:
+                    unPressInput?.Invoke();
+                    break;
             }
         }
     }

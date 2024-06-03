@@ -6,7 +6,6 @@ public class CreateWorldState : IState
 {
     private Shape _currentShape;
     private GameStateMachine _stateMachine;
-    private List<Wall> _walls = new();
 
     private int _numberWalls = 4;
     
@@ -33,14 +32,13 @@ public class CreateWorldState : IState
         _gameFactory = GameFactory.instance; //ToDo Inject
         _currentShape = _gameFactory.GetShape();
 
-        _currentShape.SetStartPosition();
+        _currentShape.SetStartPosition(true);
         
         for (int i = 0; i < _numberWalls; i++)
         {
             var wall = _gameFactory.GetWall();
             wall.WallIndex = i;
             wall.transform.position = new Vector3(0, 0, 75 * i);
-            _walls.Add(wall);
         }
     }
 }

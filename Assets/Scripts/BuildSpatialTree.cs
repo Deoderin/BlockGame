@@ -19,6 +19,8 @@ public class BuildSpatialTree
     public BuildSpatialTree()
     {
         instance = this;
+
+        GenerateTreeBlueprint();
     }
     
     public void GenerateTreeBlueprint()

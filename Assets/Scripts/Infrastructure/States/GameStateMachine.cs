@@ -14,7 +14,9 @@ public class GameStateMachine
             [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, serviceLocator),
             [typeof(CreateWorldState)] = new CreateWorldState(this),
             [typeof(PendingUIState)] = new PendingUIState(this),
-            [typeof(GameLoopState)] = new GameLoopState(this)
+            [typeof(GameLoopState)] = new GameLoopState(this),
+            [typeof(FinishLevelState)] = new FinishLevelState(this),
+            [typeof(LoadNewLevelState)] = new LoadNewLevelState(this)
         };
     }
 

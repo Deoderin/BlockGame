@@ -1,13 +1,17 @@
 using DG.Tweening;
 using UnityEngine;
-using Zenject;
 
+[RequireComponent(typeof(Camera))]
 public class CameraFollow : MonoBehaviour
 {
     private Transform _target;
 
-    [SerializeField] private Vector3 _distanceFromObject;
-
+    private float _baseFOV = 60;
+    private float _speedFOV = 80;
+    private Camera _camera;
+    
+    [SerializeField] 
+    private Vector3 _distanceFromObject;
     [SerializeField]
     private GameGUI _gameGUI;
 
@@ -17,30 +21,35 @@ public class CameraFollow : MonoBehaviour
         _target = target;
     }
 
+    private void Awake()
+    {
+        _camera = GetComponent<Camera>();
+        
+        InputManager.pressInput += FOVSpeedUp;
+        InputManager.unPressInput += FOVSpeedDown;
+    }
+
     private void LateUpdate()
     {
         FollowTarget();
-        //LookUI();
     }
+
+    public void SetSpeedFOV(bool speedFOV) => _camera.DOFieldOfView(speedFOV ? _speedFOV : _baseFOV, 0.3f);
 
     private void FollowTarget()
     {
         if(_target != null)
         {
-            Vector3 positionToGo = _target.transform.position + _distanceFromObject;
-            Vector3 smoothPosition = Vector3.Slerp(transform.position, positionToGo, 0.125f);
-            transform.position = smoothPosition; 
-            //transform.LookAt(_target.transform.position);
+            transform.position =  _target.position + _distanceFromObject;
         }
     }
 
-    public void OpenUI()
+    private void FOVSpeedUp() => SetSpeedFOV(true);
+    private void FOVSpeedDown() => SetSpeedFOV(false);
+
+    private void OnDestroy()
     {
-        _target = null;
-        
-        if(_gameGUI != null)
-        {
-            transform.DOLookAt(_gameGUI.transform.position, 1);
-        }
+        InputManager.pressInput -= FOVSpeedUp;
+        InputManager.unPressInput -= FOVSpeedDown;
     }
 }
