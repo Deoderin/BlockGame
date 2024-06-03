@@ -18,7 +18,7 @@ public class GameGUI : MonoBehaviour
     private Button _playButton;
 
     [SerializeField]
-    private GameObject _parentGUIGameObject;
+    private CanvasGroup _parentGUIGameObject;
 
     [SerializeField]
     private TextMeshProUGUI _score;    
@@ -76,12 +76,12 @@ public class GameGUI : MonoBehaviour
 
     public void OpenUI()
     {
-        _parentGUIGameObject.SetActive(true);
+        _parentGUIGameObject.DOFade(1, 0.4f);
     }    
     
     public void CloseUI()
     {
-        _parentGUIGameObject.SetActive(false);
+        _parentGUIGameObject.DOFade(0, 0.4f);
         CloseBriefingPop();
     }
 

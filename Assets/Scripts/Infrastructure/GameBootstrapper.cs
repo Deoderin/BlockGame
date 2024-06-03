@@ -20,6 +20,7 @@ public class GameBootstrapper : MonoBehaviour
         _game = new Game(_serviceLocator);
         _game.stateMachine.Enter<BootstrapState>();
 
+        Application.targetFrameRate = 60;
         DontDestroyOnLoad(this);
     }
 }
