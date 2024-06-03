@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 
 [CreateAssetMenu(menuName = "Configs/BaseLevelConfig", fileName = "BaseLevelConfig", order = 0)]
-public class BaseLevelConfig : ScriptableObjectInstaller
+public class BaseLevelConfig : ScriptableObject
 {
     [field:SerializeField]
-    public List<Shape> LevelShape {get;private set;}
+    public Shape MainShape {get;private set;}
     
     [field:SerializeField]
     public List<WallContainer> LevelWallContainer {get;private set;}

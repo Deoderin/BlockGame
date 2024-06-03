@@ -19,16 +19,16 @@ public class Shape : MonoBehaviour
         transform.Translate(Vector3.forward * _currentSpeed, Space.World);
     }
 
+    public void RebuildShape()
+    {
+        
+    }
+
+    public void RotateShape()
+    {
+        
+    }
+
     public void SpeedUp() => _currentSpeed = _boostSpeed;
     public void SpeedDown() => _currentSpeed = _normalSpeed;
-
-    private void FixedUpdate()
-    {
-        transform.Translate(Vector3.forward, Space.World);
-    }
-}
-
-public class ProgressManager
-{
-    
 }

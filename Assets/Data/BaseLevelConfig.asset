@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df8b42ea4d494ecca401005bf7f4b5fc, type: 3}
   m_Name: BaseLevelConfig
   m_EditorClassIdentifier: 
-  <LevelShape>k__BackingField: []
+  <MainShape>k__BackingField: {fileID: 5933428588974227937, guid: 088073b0318b21544935ee89132641d4, type: 3}
   <LevelWallContainer>k__BackingField: []

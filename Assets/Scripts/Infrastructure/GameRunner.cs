@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameRunner : MonoBehaviour
 {
-    public GameBootstrapper bootstrapperPrefab;
+#if UNITY_EDITOR
+    private const string InitialScene = "Bootstrap";
 
     private void Awake()
     {
@@ -10,7 +12,8 @@ public class GameRunner : MonoBehaviour
 
         if(!bootstrapper)
         {
-            Instantiate(bootstrapperPrefab);
+            SceneManager.LoadSceneAsync(InitialScene);
         }
     }
+#endif
 }

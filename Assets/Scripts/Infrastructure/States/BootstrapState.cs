@@ -1,39 +1,37 @@
+using UnityEngine;
+using Zenject;
+
 public class BootstrapState : IState
 {
-    private const string Initial = "Initial";
+    private const string GameSceneName = "Game";
+    
     private readonly GameStateMachine _stateMachine;
     private readonly SceneLoader _sceneLoader;
+    private readonly SceneContext _serviceLocator;
     
-    public BootstrapState(GameStateMachine stateMachine, SceneLoader sceneLoader)
+    public BootstrapState(GameStateMachine stateMachine, SceneLoader sceneLoader, SceneContext serviceLocator)
     {
         _stateMachine = stateMachine;
         _sceneLoader = sceneLoader;
-
-        RegisterServices();
+        _serviceLocator = serviceLocator;
     }
 
     public void Enter()
     {
-        _sceneLoader.Load(Initial, EnterLoadLevel);
+        RegisterServices();
+        
+        _sceneLoader.Load(GameSceneName, EnterLoadLevel);
     }
 
-    public void Exit() { }
-
-    private void EnterLoadLevel()
+    public void Exit()
     {
-        _stateMachine.Enter<LoadProgressState>();
+        
     }
 
     private void RegisterServices()
     {
-        
-        //_services.RegisterSingle<IAsset>(new AssetProvider());
-        //_services.RegisterSingle<IPersistentProgressServices>(new PersistentProgressServices());
-        //_services.RegisterSingle<IBoardServices>(new ChessBoardService(AllServices.Container.Single<IAsset>()));
-        //_services.RegisterSingle<IGameFactory>(new GameFactory(AllServices.Container.Single<IAsset>(), AllServices.Container.Single<IBoardServices>()));
-        //_services.RegisterSingle<ISaveLoadService>(new SaveLoadService(AllServices.Container.Single<PersistentProgressServices>(), AllServices.Container.Single<IGameFactory>()));
-        //_services.RegisterSingle<IInteractableService>(new GetInteractableObject());
+        _serviceLocator.Install();
     }
+
+    private void EnterLoadLevel() => _stateMachine.Enter<CreateWorldState>();
 }
-
-

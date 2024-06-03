@@ -10,5 +10,5 @@ public interface IExitableState
 
 public interface IPayloadedState<in TPayload> : IExitableState
 {
-    void Enter(TPayload _payload);
+    void Enter(TPayload payload);
 }

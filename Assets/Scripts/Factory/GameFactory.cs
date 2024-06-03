@@ -1,23 +1,35 @@
-using UnityEngine;
-using Zenject;
+using System.Collections.Generic;
+using System.Linq;
 using Object = UnityEngine.Object;
 
-public class GameFactory : IGameFactory
+public class GameFactory : IGameFactory 
 {
     private BaseLevelConfig _levelConfig;
     private Shape _currentShape;
+
+    public static GameFactory instance;
     
     public GameFactory(BaseLevelConfig config)
     {
         _levelConfig = config;
+        instance = this;
     }
     
-    public Shape GetShape(int levelNumber) => Object.Instantiate(_levelConfig?.LevelShape[levelNumber]);
-    public Wall GetWall(int levelNumber, int wallNumber) => Object.Instantiate(_levelConfig?.LevelWallContainer[levelNumber]?.LevelWall[wallNumber]);
+    public Shape GetShape()
+    {
+        if(_currentShape == null)
+        {
+            _currentShape = Object.Instantiate(_levelConfig.MainShape);
+        }
+
+        return _currentShape;
+    }
+
+    public List<Wall> GetWalls(int levelNumber) => _levelConfig.LevelWallContainer[levelNumber].LevelWall.Select(Object.Instantiate).ToList();
 }
 
-public interface IGameFactory
+public interface IGameFactory : IService
 {
-    Shape GetShape(int levelNumber);    
-    Wall GetWall(int levelNumber, int wallNumber);
+    Shape GetShape();    
+    List<Wall> GetWalls(int levelNumber);
 }

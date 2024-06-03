@@ -1,40 +1,14 @@
-using UnityEngine;
-using Zenject;
-
-public class ShapePusher : MonoBehaviour
+public class ShapePusher : IFixedUpdateable
 {
-    private IGameFactory _gameFactory;
-        
-    [Inject]
-    private void Construct(IGameFactory gameFactory)
-    {
-        _gameFactory = gameFactory;
-    }
+    private Shape _currentShape;
     
-    private void FixedUpdate()
+    public void FixedUpdate()
     {
-        
+        _currentShape.MoveForward();
     }
 }
 
-public class WorldCreator
+public interface IFixedUpdateable
 {
-    private void CreateWall()
-    {
-        
-    }
-
-    private void CreateShape()
-    {
-        
-    }
+    public void FixedUpdate();
 }
-
-public class GameObserver : MonoBehaviour
-{
-    private void FixedUpdate()
-    {
-        
-    }
-}
-
