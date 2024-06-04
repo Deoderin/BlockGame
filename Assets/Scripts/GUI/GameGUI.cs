@@ -77,11 +77,15 @@ public class GameGUI : MonoBehaviour
     public void OpenUI()
     {
         _parentGUIGameObject.DOFade(1, 0.4f);
+        _parentGUIGameObject.interactable = true;
+        _parentGUIGameObject.blocksRaycasts = true;
     }    
     
     public void CloseUI()
     {
         _parentGUIGameObject.DOFade(0, 0.4f);
+        _parentGUIGameObject.interactable = false;
+        _parentGUIGameObject.blocksRaycasts = false;
         CloseBriefingPop();
     }
 
