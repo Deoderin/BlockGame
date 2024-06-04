@@ -26,7 +26,6 @@ public class ScoreSystem : MonoBehaviour, IScoreSystem
     public void SetScore(ScoreType score)
     {
         _score += GetScoreWithType(score) * _multiplier;
-        
         IScoreSystem.scoreChanged?.Invoke();
     }
 

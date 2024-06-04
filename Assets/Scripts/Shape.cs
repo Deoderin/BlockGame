@@ -81,8 +81,8 @@ public class Shape : MonoBehaviour
 
     private void CheckSpeed()
     {
-        int approximately = 1; 
-        if(_currentSpeed + approximately >= _boostSpeed)
+        float approximately = 0.1f;
+        if(_currentSpeed + approximately > _boostSpeed)
         {
             _scoreSystem.SetScore(ScoreType.speedScore);
         }

@@ -44,7 +44,8 @@ public class GameGUI : MonoBehaviour
     private void RegisterAction()
     {
         BriefingPopUp.nextLevel += CloseBriefingPop;
-        IScoreSystem.multiplierChanged += UpdateScore;
+        IScoreSystem.scoreChanged += UpdateScore;
+        IScoreSystem.multiplierChanged += UpdateMultiplier;
         Shape.levelCompleted += OpenBriefingPop;
         _playButton.onClick.AddListener(() => play.Invoke());
     }
@@ -58,13 +59,15 @@ public class GameGUI : MonoBehaviour
 
     public void CloseBriefingPop() => _briefingPop.transform.DOMove(_closeBriefingAnchor.transform.position, _animationTime);
 
-    private void UpdateScore()
+    private void UpdateMultiplier()
     {
         ShakeMultiplier();
+        UpdateScore();
         _multiplierNumber = _scoreSystem.GetMultiplier();
-        _score.text = _scoreSystem.GetScore().ToString();
         _multipiller.text = _multiplierNumber > 0 ? "X" + _multiplierNumber : "";
     }
+
+    private void UpdateScore() => _score.text = _scoreSystem.GetScore().ToString();
 
     private void ShakeMultiplier()
     {
@@ -92,7 +95,8 @@ public class GameGUI : MonoBehaviour
     private void OnDestroy()
     {
         BriefingPopUp.nextLevel -= CloseBriefingPop;
-        IScoreSystem.multiplierChanged -= UpdateScore;
+        IScoreSystem.scoreChanged -= UpdateScore;
+        IScoreSystem.multiplierChanged -= UpdateMultiplier;
         Shape.levelCompleted -= OpenBriefingPop;
     }
 }
