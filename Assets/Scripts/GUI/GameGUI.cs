@@ -25,6 +25,7 @@ public class GameGUI : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _multipiller;
 
+    private Vector3 _multiplierPosition; 
     private IScoreSystem _scoreSystem;
     private float _animationTime = 1;
     private int _multiplierNumber;
@@ -36,7 +37,8 @@ public class GameGUI : MonoBehaviour
     private void Start()
     {
         RegisterAction();
-        
+
+        _multiplierPosition = _multipiller.transform.position;
         _scoreSystem = ScoreSystem.instance;
         _briefingPop.transform.position = _closeBriefingAnchor.transform.position;
     }
@@ -73,8 +75,13 @@ public class GameGUI : MonoBehaviour
     {
         float animationTime = 0.5f;
         
-        _multipiller.transform.DOShakePosition(animationTime, 5);
-        _multipiller.transform.DOShakeRotation(animationTime, 5);
+        _multipiller.transform.DOShakePosition(animationTime, 7);
+        _multipiller.transform.DOShakeRotation(animationTime, 7).OnComplete(
+            () =>
+            {
+                _multipiller.transform.position = _multiplierPosition;
+                _multipiller.transform.rotation = Quaternion.identity;
+            });
     }
 
     public void OpenUI()
