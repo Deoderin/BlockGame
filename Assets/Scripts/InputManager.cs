@@ -7,7 +7,10 @@ public class InputManager :  MonoBehaviour, IDragHandler, IEndDragHandler
     public static UnityAction pressInput;
     public static UnityAction unPressInput;    
     public static UnityAction<DraggedDirection> swipeInput;
-    
+
+    private float _timeTouchEnded;
+
+    private float _displayTime = 0.25f;
     public enum DraggedDirection
     {
         Up,
@@ -23,13 +26,21 @@ public class InputManager :  MonoBehaviour, IDragHandler, IEndDragHandler
         if(Input.touchCount == 1)
         {
             _touch = Input.GetTouch(0);
+            
             switch(_touch.phase)
             {
                 case TouchPhase.Stationary:
-                    pressInput?.Invoke();
+                    if(Time.time - _timeTouchEnded > _displayTime)
+                    {
+                        pressInput?.Invoke();
+                    }
                     break;
                 case TouchPhase.Ended:
+                    _timeTouchEnded = Time.time;
                     unPressInput?.Invoke();
+                    break;
+                case TouchPhase.Began:
+                    _timeTouchEnded = Time.time;
                     break;
             }
         }
